@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TripCraft 簡易旅遊行程規劃網站">
+  <title>TripCraft｜旅遊行程規劃</title>
+
+  <!-- 連接 CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- 網站導覽列 -->
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="#home" class="logo">TripCraft<span>.</span></a>
+
+      <div class="nav-links">
+        <a href="#home">首頁</a>
+        <a href="#planner">開始規劃</a>
+        <a href="#itinerary">我的行程</a>
+        <a href="#about">關於網站</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- 首頁視覺 -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="hero-subtitle">YOUR JOURNEY STARTS HERE</p>
+        <h1>讓每一趟旅行<br>都成為美好回憶</h1>
+        <p class="hero-description">
+          從目的地到每一天的景點安排，
+          用 TripCraft 輕鬆規劃專屬旅程。
+        </p>
+        <a href="#planner" class="btn btn-primary">
+          開始規劃旅行 →
+        </a>
+      </div>
+    </section>
+
+    <!-- 建立旅行 -->
+    <section id="planner" class="planner-section">
+      <div class="section-heading">
+        <p class="section-subtitle">PLAN YOUR TRIP</p>
+        <h2>建立你的旅行計畫</h2>
+        <p>填寫基本資訊，開始安排精彩旅程。</p>
+      </div>
+
+      <div class="planner-container">
+        <form id="trip-form">
+
+          <div class="form-group">
+            <label for="trip-name">旅行名稱</label>
+            <input type="text" id="trip-name"
+                   placeholder="例如：東京五天四夜自由行"
+                   maxlength="60" required>
+          </div>
+
+          <div class="form-group">
+            <label for="destination">目的地</label>
+            <input type="text" id="destination"
+                   placeholder="例如：日本東京"
+                   maxlength="80" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="start-date">開始日期</label>
+              <input type="date" id="start-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="end-date">結束日期</label>
+              <input type="date" id="end-date" required>
+            </div>
+          </div>
+
+          <button type="submit" id="create-trip-btn"
+                  class="btn btn-primary">
+            建立我的旅行
+          </button>
+        </form>
+
+        <p id="trip-message" class="form-message"
+           role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 我的行程 -->
+    <section id="itinerary" class="itinerary-section">
+      <div class="section-heading">
+        <p class="section-subtitle">MY ITINERARY</p>
+        <h2>探索你的每日行程</h2>
+        <p>切換不同日期，查看旅程中的每一站。</p>
+      </div>
+
+      <!-- 旅行摘要 -->
+      <div id="trip-summary" class="trip-summary" hidden>
+        <p class="section-subtitle">YOUR TRIP</p>
+        <h3 id="display-trip-name"></h3>
+        <p>目的地：<span id="display-destination"></span></p>
+        <p>日期：<span id="display-dates"></span></p>
+        <p>天數：<span id="display-days"></span></p>
+      </div>
+
+      <!-- 日期切換 -->
+      <div id="day-tabs" class="day-tabs"
+           role="group" aria-label="選擇旅遊日期">
+      </div>
+
+      <div class="day-heading">
+        <h3 id="selected-day-title">每日行程</h3>
+        <p id="selected-day-date"></p>
+      </div>
+
+      <!-- 景點由 JavaScript 產生 -->
+      <div id="attraction-list" class="attraction-grid"></div>
+
+      <!-- 空白行程提示 -->
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">✈</div>
+        <h3>你的旅程即將開始</h3>
+        <p>建立旅行並新增景點，開始規劃精彩行程。</p>
+      </div>
+    </section>
+
+    <!-- 新增景點 -->
+    <section id="add-attraction" class="attraction-section">
+      <div class="section-heading">
+        <p class="section-subtitle">ADD A PLACE</p>
+        <h2>新增旅遊景點</h2>
+        <p>記錄想去的地方，打造專屬旅行路線。</p>
+      </div>
+
+      <div class="attraction-form-container">
+        <form id="attraction-form">
+
+          <div class="form-group">
+            <label for="attraction-day">選擇日期</label>
+            <select id="attraction-day" required disabled>
+              <option value="">請先建立旅行</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="attraction-name">景點名稱</label>
+            <input type="text" id="attraction-name"
+                   placeholder="例如：東京鐵塔"
+                   maxlength="80" required>
+          </div>
+
+          <div class="form-group">
+            <label for="attraction-time">預計時間</label>
+            <input type="time" id="attraction-time" required>
+          </div>
+
+          <div class="form-group">
+            <label for="attraction-note">景點備註</label>
+            <textarea id="attraction-note" rows="4"
+                      maxlength="500"
+                      placeholder="例如：下午欣賞東京市景..."></textarea>
+          </div>
+
+          <button type="submit" id="add-attraction-btn"
+                  class="btn btn-primary" disabled>
+            ＋ 新增景點
+          </button>
+        </form>
+
+        <p id="attraction-message" class="form-message"
+           role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 網站介紹 -->
+    <section id="about" class="about-section">
+      <div class="about-container">
+        <p class="section-subtitle">ABOUT US</p>
+        <h2>Travel Made Simple.</h2>
+        <p>
+          TripCraft 是一個簡單直覺的旅遊行程規劃工具。
+          無須註冊帳號，即可建立旅行、安排日期、
+          新增景點，輕鬆整理每一天的旅程。
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="site-footer">
+    <p class="footer-logo">TripCraft.</p>
+    <p>Make every journey memorable.</p>
+    <p>© 2026 TripCraft</p>
+  </footer>
+
+  <!-- 連接 JavaScript -->
+  <script src="main.js"></script>
+
+</body>
+</html>
