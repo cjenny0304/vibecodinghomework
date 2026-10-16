@@ -8,7 +8,456 @@
   <title>yun旅遊行程規劃</title>
 
   <!-- 連接 CSS -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+  
+/* TripCraft - style.css */
+
+:root {
+  --bg: #F8F6F1;
+  --green: #426B5A;
+  --dark-green: #304F42;
+  --light-green: #DCE8DF;
+  --text: #293630;
+  --muted: #6D7973;
+  --white: #FFFFFF;
+  --border: #E4E8E2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 95px;
+}
+
+body {
+  font-family: "PingFang TC", "Microsoft JhengHei",
+               Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+}
+
+a { text-decoration: none; color: inherit; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+
+section { padding: 85px 24px; }
+
+/* 導覽列 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(248,246,241,.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.navbar {
+  max-width: 1120px;
+  min-height: 75px;
+  margin: auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo, .footer-logo {
+  font-family: Georgia, serif;
+  font-size: 29px;
+  font-weight: bold;
+  color: var(--green);
+}
+
+.logo span { color: #DDA77B; }
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  font-size: 14px;
+}
+
+.nav-links a:hover { color: var(--green); }
+
+/* 首頁 */
+.hero {
+  min-height: 570px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background:
+    linear-gradient(rgba(20,42,32,.40),
+                    rgba(20,42,32,.65)),
+    url("https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1800&q=85")
+    center/cover no-repeat;
+}
+
+.hero-content { max-width: 750px; }
+
+.hero-subtitle, .section-subtitle {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-family: Georgia, "PingFang TC", serif;
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.4;
+  margin-bottom: 22px;
+}
+
+.hero-description {
+  max-width: 540px;
+  margin: 0 auto 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: .25s;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--dark-green);
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.hero .btn {
+  background: white;
+  color: var(--dark-green);
+}
+
+/* 區塊標題 */
+.section-heading {
+  text-align: center;
+  margin: 0 auto 40px;
+}
+
+.section-heading .section-subtitle,
+.about-section .section-subtitle {
+  color: var(--green);
+}
+
+.section-heading h2 {
+  font-size: clamp(27px, 3.5vw, 39px);
+  margin-bottom: 10px;
+}
+
+.section-heading > p:last-child {
+  color: var(--muted);
+}
+
+/* 表單 */
+.planner-container,
+.attraction-form-container {
+  max-width: 750px;
+  margin: auto;
+  padding: 40px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 8px 28px rgba(25,50,35,.07);
+}
+
+#trip-form, #attraction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 15px;
+  border: 1px solid #DCE3DB;
+  border-radius: 10px;
+  background: #FBFCFA;
+  color: var(--text);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--light-green);
+  border-color: var(--green);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+#trip-form .btn,
+#attraction-form .btn {
+  align-self: flex-start;
+}
+
+.form-message {
+  margin-top: 15px;
+  color: var(--green);
+  font-size: 14px;
+}
+
+/* 每日行程 */
+.itinerary-section { background: #F0F3ED; }
+
+.trip-summary {
+  max-width: 1120px;
+  margin: 0 auto 35px;
+  padding: 28px;
+  border-left: 5px solid var(--green);
+  border-radius: 14px;
+  background: white;
+}
+
+.trip-summary h3 {
+  color: var(--green);
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.trip-summary p { margin-bottom: 5px; }
+
+.day-tabs {
+  max-width: 1120px;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.day-tab {
+  padding: 10px 22px;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  background: white;
+  color: var(--green);
+  font-weight: bold;
+  transition: .2s;
+}
+
+.day-tab:hover { background: var(--light-green); }
+
+.day-tab.active {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.day-heading {
+  max-width: 1120px;
+  margin: 0 auto 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #D7DFD5;
+}
+
+.day-heading h3 { font-size: 24px; }
+.day-heading p { color: var(--muted); }
+
+/* 景點卡片 */
+.attraction-grid {
+  max-width: 1120px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.attraction-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 7px 24px rgba(25,50,35,.06);
+  transition: .25s;
+}
+
+.attraction-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(25,50,35,.13);
+}
+
+.attraction-name {
+  font-size: 20px;
+  color: var(--dark-green);
+  overflow-wrap: anywhere;
+}
+
+.attraction-time {
+  align-self: flex-start;
+  padding: 4px 12px;
+  background: var(--light-green);
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+.attraction-note {
+  flex: 1;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.delete-btn {
+  align-self: flex-start;
+  border: 1px solid #F0D5CE;
+  border-radius: 8px;
+  background: #FFF4F1;
+  padding: 8px 14px;
+  color: #B65D4C;
+}
+
+.delete-btn:hover { background: #FCE1DB; }
+
+.empty-state {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 45px 25px;
+  border: 2px dashed #CFD9CE;
+  border-radius: 20px;
+  background: rgba(255,255,255,.7);
+  text-align: center;
+}
+
+.empty-icon { font-size: 42px; color: var(--green); }
+.empty-state h3 { color: var(--green); }
+.empty-state p { color: var(--muted); }
+
+/* 網站介紹與頁尾 */
+.about-section {
+  background: var(--light-green);
+  text-align: center;
+}
+
+.about-container {
+  max-width: 740px;
+  margin: auto;
+}
+
+.about-container h2 {
+  font: bold 38px Georgia, serif;
+  margin-bottom: 20px;
+}
+
+.site-footer {
+  padding: 35px 20px;
+  background: var(--dark-green);
+  color: white;
+  text-align: center;
+}
+
+.site-footer .footer-logo { color: white; }
+.site-footer p { font-size: 13px; }
+
+/* 平板 */
+@media (max-width: 900px) {
+  .attraction-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-links { gap: 15px; }
+}
+
+/* 手機 */
+@media (max-width: 600px) {
+  html { scroll-padding-top: 130px; }
+
+  section { padding: 65px 18px; }
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 8px 15px;
+    font-size: 12px;
+  }
+
+  .hero {
+    min-height: 480px;
+  }
+
+  .hero h1 { font-size: 34px; }
+
+  .planner-container,
+  .attraction-form-container {
+    padding: 25px 20px;
+  }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  #trip-form .btn,
+  #attraction-form .btn {
+    width: 100%;
+  }
+
+  .attraction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .day-tabs { justify-content: flex-start; }
+  .day-tab { padding: 9px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+</style>
 </head>
 
 <body>
@@ -201,7 +650,387 @@
   </footer>
 
   <!-- 連接 JavaScript -->
-  <script src="main.js"></script>
+  <script>
+  
+// TripCraft - main.js
+
+"use strict";
+
+// 1. 取得 HTML 元件
+const tripForm = document.getElementById("trip-form");
+const attractionForm = document.getElementById("attraction-form");
+
+const tripMessage = document.getElementById("trip-message");
+const attractionMessage = document.getElementById("attraction-message");
+
+const tripSummary = document.getElementById("trip-summary");
+const dayTabs = document.getElementById("day-tabs");
+const attractionList = document.getElementById("attraction-list");
+const emptyState = document.getElementById("empty-state");
+
+const daySelect = document.getElementById("attraction-day");
+const addButton = document.getElementById("add-attraction-btn");
+
+const STORAGE_KEY = "tripcraft_data_v1";
+const DAY_MS = 24 * 60 * 60 * 1000;
+const MAX_DAYS = 30;
+
+// 2. 初始東京三日遊範例
+const exampleTrip = {
+  name: "東京三日遊",
+  destination: "日本東京",
+  startDate: "2026-11-06",
+  endDate: "2026-11-08",
+  attractions: [
+    {
+      id: "sample-1",
+      day: 0,
+      name: "明治神宮",
+      time: "09:00",
+      note: "在都市中的森林神社散步。"
+    },
+    {
+      id: "sample-2",
+      day: 0,
+      name: "表參道",
+      time: "13:00",
+      note: "享受街道建築、咖啡廳與購物。"
+    },
+    {
+      id: "sample-3",
+      day: 1,
+      name: "東京車站",
+      time: "10:00",
+      note: "欣賞歷史建築與周邊街景。"
+    },
+    {
+      id: "sample-4",
+      day: 1,
+      name: "銀座",
+      time: "14:00",
+      note: "逛街、用餐及探索城市。"
+    },
+    {
+      id: "sample-5",
+      day: 2,
+      name: "上野公園",
+      time: "09:30",
+      note: "漫步公園，感受東京的自然景觀。"
+    }
+  ]
+};
+
+// 3. 日期相關工具
+function parseDate(dateString) {
+  const parts = dateString.split("-").map(Number);
+  return Date.UTC(parts[0], parts[1] - 1, parts[2]);
+}
+
+function getDayCount(start, end) {
+  return Math.round(
+    (parseDate(end) - parseDate(start)) / DAY_MS
+  ) + 1;
+}
+
+function getDateForDay(start, dayIndex) {
+  const date = new Date(parseDate(start) + dayIndex * DAY_MS);
+  return date.toISOString().slice(0, 10);
+}
+
+function formatDate(dateString) {
+  return dateString.replaceAll("-", "/");
+}
+
+// 4. 載入儲存資料
+function loadTrip() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+
+      if (
+        parsed &&
+        typeof parsed.name === "string" &&
+        typeof parsed.destination === "string" &&
+        typeof parsed.startDate === "string" &&
+        typeof parsed.endDate === "string" &&
+        Array.isArray(parsed.attractions) &&
+        /^\d{4}-\d{2}-\d{2}$/.test(parsed.startDate) &&
+        /^\d{4}-\d{2}-\d{2}$/.test(parsed.endDate) &&
+        getDayCount(parsed.startDate, parsed.endDate) >= 1 &&
+        getDayCount(parsed.startDate, parsed.endDate) <= MAX_DAYS
+      ) {
+        return parsed;
+      }
+    }
+  } catch (error) {
+    console.warn("儲存資料讀取失敗", error);
+  }
+
+  return structuredClone(exampleTrip);
+}
+
+let trip = loadTrip();
+let selectedDay = 0;
+
+function saveTrip() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(trip));
+  } catch (error) {
+    console.warn("無法儲存行程", error);
+    tripMessage.textContent = "瀏覽器無法儲存資料，請確認儲存空間或隱私設定。";
+  }
+}
+
+// 5. 顯示旅行摘要
+function renderSummary() {
+  tripSummary.hidden = false;
+
+  document.getElementById("display-trip-name").textContent =
+    trip.name;
+
+  document.getElementById("display-destination").textContent =
+    trip.destination;
+
+  document.getElementById("display-dates").textContent =
+    formatDate(trip.startDate) + " ～ " +
+    formatDate(trip.endDate);
+
+  document.getElementById("display-days").textContent =
+    getDayCount(trip.startDate, trip.endDate) + " 天";
+}
+
+// 6. 產生 Day 1、Day 2 等按鈕
+function renderDayTabs() {
+  dayTabs.replaceChildren();
+
+  const count = getDayCount(trip.startDate, trip.endDate);
+
+  for (let i = 0; i < count; i++) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className =
+      "day-tab" + (i === selectedDay ? " active" : "");
+
+    button.textContent = "Day " + (i + 1);
+    button.setAttribute(
+      "aria-pressed",
+      String(i === selectedDay)
+    );
+
+    button.addEventListener("click", () => {
+      selectedDay = i;
+      render();
+    });
+
+    dayTabs.appendChild(button);
+  }
+}
+
+// 7. 景點卡片
+function createAttractionCard(attraction) {
+  const card = document.createElement("article");
+  card.className = "attraction-card";
+
+  const time = document.createElement("span");
+  time.className = "attraction-time";
+  time.textContent = "◷ " + attraction.time;
+
+  const name = document.createElement("h4");
+  name.className = "attraction-name";
+  name.textContent = attraction.name;
+
+  const note = document.createElement("p");
+  note.className = "attraction-note";
+  note.textContent = attraction.note || "沒有額外備註";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.className = "delete-btn";
+  deleteButton.textContent = "刪除景點";
+
+  deleteButton.addEventListener("click", () => {
+    const confirmed = confirm(
+      "確定要刪除「" + attraction.name + "」嗎？"
+    );
+
+    if (!confirmed) return;
+
+    trip.attractions = trip.attractions.filter(
+      item => item.id !== attraction.id
+    );
+
+    saveTrip();
+    render();
+  });
+
+  card.append(time, name, note, deleteButton);
+  return card;
+}
+
+// 8. 顯示目前選擇日期的景點
+function renderAttractions() {
+  attractionList.replaceChildren();
+
+  const currentDate = getDateForDay(
+    trip.startDate,
+    selectedDay
+  );
+
+  document.getElementById("selected-day-title").textContent =
+    "Day " + (selectedDay + 1) + " 的旅程";
+
+  document.getElementById("selected-day-date").textContent =
+    formatDate(currentDate);
+
+  const items = trip.attractions
+    .filter(item => item.day === selectedDay)
+    .sort((a, b) => a.time.localeCompare(b.time));
+
+  emptyState.hidden = items.length > 0;
+
+  const emptyTitle = emptyState.querySelector("h3");
+  const emptyDescription = emptyState.querySelector("p");
+
+  emptyTitle.textContent = "今天還沒有安排景點";
+  emptyDescription.textContent =
+    "在下方新增景點，開始安排這一天的旅行。";
+
+  items.forEach(item => {
+    attractionList.appendChild(createAttractionCard(item));
+  });
+}
+
+// 9. 更新新增景點的日期選單
+function renderDaySelect() {
+  daySelect.replaceChildren();
+
+  const count = getDayCount(trip.startDate, trip.endDate);
+
+  for (let i = 0; i < count; i++) {
+    const option = document.createElement("option");
+
+    option.value = String(i);
+    option.textContent =
+      "Day " + (i + 1) + " — " +
+      formatDate(getDateForDay(trip.startDate, i));
+
+    daySelect.appendChild(option);
+  }
+
+  daySelect.value = String(selectedDay);
+  daySelect.disabled = false;
+  addButton.disabled = false;
+}
+
+// 10. 統一更新網頁
+function render() {
+  renderSummary();
+  renderDayTabs();
+  renderAttractions();
+  renderDaySelect();
+}
+
+// 11. 建立新旅行
+tripForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = document.getElementById("trip-name").value.trim();
+  const destination = document.getElementById("destination").value.trim();
+  const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
+
+  if (!name || !destination || !startDate || !endDate) {
+    tripMessage.textContent = "請填寫完整旅行資訊。";
+    return;
+  }
+
+  const days = getDayCount(startDate, endDate);
+
+  if (!Number.isFinite(days) || days < 1) {
+    tripMessage.textContent = "結束日期不能早於開始日期。";
+    return;
+  }
+
+  if (days > MAX_DAYS) {
+    tripMessage.textContent = "每次最多規劃 30 天的旅行。";
+    return;
+  }
+
+  if (trip.attractions.length > 0) {
+    const confirmed = confirm(
+      "建立新旅行將取代目前行程，確定要繼續嗎？"
+    );
+    if (!confirmed) return;
+  }
+
+  trip = {
+    name,
+    destination,
+    startDate,
+    endDate,
+    attractions: []
+  };
+
+  selectedDay = 0;
+  saveTrip();
+  render();
+
+  tripMessage.textContent = "旅行建立成功！可以開始新增景點。";
+
+  document.getElementById("itinerary").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+// 12. 新增景點
+attractionForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const day = Number(daySelect.value);
+  const name = document.getElementById("attraction-name").value.trim();
+  const time = document.getElementById("attraction-time").value;
+  const note = document.getElementById("attraction-note").value.trim();
+
+  if (!name || !time || !Number.isInteger(day) ||
+      day < 0 || day >= getDayCount(trip.startDate, trip.endDate)) {
+    attractionMessage.textContent = "請填寫完整的景點資料。";
+    return;
+  }
+
+  const id = crypto.randomUUID
+    ? crypto.randomUUID()
+    : String(Date.now()) + "-" + Math.random();
+
+  trip.attractions.push({
+    id,
+    day,
+    name,
+    time,
+    note
+  });
+
+  selectedDay = day;
+
+  saveTrip();
+  render();
+
+  attractionForm.reset();
+  daySelect.value = String(selectedDay);
+
+  attractionMessage.textContent = "景點新增成功！";
+
+  document.getElementById("itinerary").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+// 13. 首次載入
+render();
+
+</script>
 
 </body>
 </html>
